@@ -1,0 +1,481 @@
+/* 常用初始化样式 */
+body {
+    max-width: 540px;
+    min-width: 320px;
+    margin: 0 auto;
+    font: normal 16px/1.5 PingFangSC-regular, Tahoma, Lucida Grande, Verdana, Microsoft Yahei, STXihei, hei;
+    color: #000;
+    /* 防止出现x 轴的滚动条 */
+    overflow-x: hidden;
+    /*  移动端点击高亮需要清除,设置为transparent 完成透明  */
+    /* 等同于 -webkit-tap-highlight-color: transparent; */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: #f4f4f4;
+}
+
+ul {
+    list-style: none;
+    /* 去除ul 默认的padding margin 值 */
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #222;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+/* 搜索模块 */
+.search-index {
+    /* 在父盒子中加这句话，就能让行内元素a 能够设置宽高，并在一行排列 */
+    /* 当父盒子设为flex 布局以后，子元素的float /clear /vertical-align 属性将失效 */
+    display: flex;
+    /* 固定定位跟父级无关，它以屏幕(宽度、高度)为准 */
+    position: fixed;
+    top: 0;
+    /* 若去除left: 50%; transform: translateX(-50%);只写 top: 0;也能实现定位水平居中（京东做法）*/
+    left: 50%;
+    /* 考虑兼容性问题 */
+    -webkit-transform: translateX(-50%);
+    /* margin-left: -270px; */
+    /* 因为盒子宽度会改变，所以不用margin-left,而用百分比 */
+    transform: translateX(-50%);
+    /* 固定的盒子应该有宽度 */
+    width: 100%;
+    min-width: 320px;
+    max-width: 540px;
+    height: 44px;
+    /* 已经有定位了，这个居中对齐无效 */
+    /* margin: 0 auto; */
+    background-color: #F6F6F6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    z-index: 999;
+}
+
+.search {
+    position: relative;
+    height: 26px;
+    /* 由于用了CSS3盒子模型 box-sizing: border-box; 想要文字居中就要减去上下边框*/
+    line-height: 24px;
+    border: 1px solid #ccc;
+    flex: 1;
+    font-size: 12px;
+    color: #666;
+    margin: 7px 10px;
+    border-radius: 5px;
+    padding-left: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+}
+
+.search::before {
+    content: '';
+    /* 加了定位的盒子，margin失效 */
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 15px;
+    height: 15px;
+    background: url(../images/sprite.png) no-repeat -58px -278px;
+    background-size: 104px;
+}
+
+.user {
+    width: 44px;
+    height: 44px;
+    font-size: 12px;
+    text-align: center;
+    color: #2eaae0;
+}
+
+.user::before {
+    /* before after 创建一个元素,但都属于行内元素 必须要有content属性 */
+    content: '';
+    display: block;
+    width: 23px;
+    height: 23px;
+    background: url(../images/sprite.png) no-repeat -59px -194px;
+    /* 二倍精灵图做法 */
+    /* 在PS里把精灵图等比例缩放为原来的一半 */
+    /* 之后根据大小测量坐标 */
+    /* 注意代码里background-size 也要写:精灵图宽度的一半 */
+    background-size: 104px;
+    /* 三个值 上 左右 下 */
+    margin: 4px auto -2px;
+}
+
+/* goBack */
+
+.goBack {
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    background: url(../images/back.png) no-repeat;
+    background-size: 38px 38px;
+    z-index: 10;
+}
+
+
+/* focus  */
+.focus {
+    position: relative;
+    /* 上面导航栏用的是固定定位，不占位置，为了不让导航栏挡住图片，让图片往下移导航栏的高度 */
+    padding-top: 44px;
+    /* 溢出隐藏 */
+    overflow: hidden;
+}
+
+.focus img {
+    width: 100%;
+}
+
+.focus ol {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    margin: 0;
+}
+
+.focus ol li {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+    list-style: none;
+    border-radius: 2px;
+    /* 给小圆点变化添加过渡效果 */
+    transition: all .3s;
+}
+
+.focus ol li.current {
+    width: 15px;
+}
+
+.focus ul {
+    /* 清除浮动 */
+    overflow: hidden;
+    width: 500%;
+    /* 百分比是相对于父盒子而言 让ul往左走屏幕的宽度*/
+    margin-left: -100%;
+}
+
+.focus ul li {
+    float: left;
+    width: 20%;
+}
+
+
+
+/* 局部导航栏 */
+.local-nav {
+    display: flex;
+    height: 64px;
+    background-color: #fff;
+    /* 让左右空出距离 */
+    margin: 3px 4px;
+    border-radius: 8px;
+}
+
+.local-nav li {
+    flex: 1;
+}
+
+.local-nav a {
+    display: flex;
+    /* 把主轴设为y 轴 */
+    flex-direction: column;
+    /* 侧轴居中对齐（单行） */
+    align-items: center;
+    font-size: 12px;
+}
+
+span[class^='local-nav-icon'] {
+    width: 32px;
+    height: 32px;
+    /* 在flex盒子中不会出现外边距合并问题 */
+    margin-top: 8px;
+    /* 二倍精灵图做法 */
+    /* 在PS里把精灵图等比例缩放为原来的一半 */
+    /* 之后根据大小测量坐标 */
+    /* 注意代码里background-size 也要写:精灵图宽度的一半 */
+    background-size: 32px;
+}
+
+.local-nav-icon1 {
+    background: url(../images/localnav_bg.png) no-repeat 0 0;
+
+}
+
+.local-nav-icon2 {
+    background: url(../images/localnav_bg.png) no-repeat 0 -32px;
+
+}
+
+.local-nav-icon3 {
+    background: url(../images/localnav_bg.png) no-repeat 0 -64px;
+}
+
+.local-nav-icon4 {
+    background: url(../images/localnav_bg.png) no-repeat 0 -96px;
+}
+
+.local-nav-icon5 {
+    background: url(../images/localnav_bg.png) no-repeat 0 -128px;
+}
+
+/* nav */
+nav {
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 0 4px 3px;
+}
+
+.nav-common {
+    display: flex;
+    height: 88px;
+    background-color: pink;
+}
+
+.nav-common:nth-child(2) {
+    margin: 3px 0;
+}
+
+.nav-items {
+    flex: 1;
+    /* 不冲突 这个盒子可以是别的盒子的子，也可以是别的盒子的父*/
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-items a {
+    flex: 1;
+    text-align: center;
+    line-height: 44px;
+    color: #fff;
+    font-size: 14px;
+    /* 文字阴影，让文字更立体 */
+    text-shadow: 1px 1px rgba(0, 0, 0, .2);
+}
+
+.nav-items a:nth-child(1) {
+    border-bottom: 1px solid #fff;
+}
+
+.nav-items:nth-child(1) a {
+    border: none;
+    background: url(../images/hotel.png) no-repeat bottom center;
+    background-size: 121px;
+
+}
+
+/* -n+2 就是选择前面两个元素 */
+.nav-items:nth-child(-n+2) {
+    /* 之所以不用margin 而用 border 是因为背景有个颜色 */
+    border-right: 1px solid #fff;
+}
+
+.nav-common:nth-child(1) {
+    background: -webkit-linear-gradient(left, #FA5A55, #FA994D);
+}
+
+.nav-common:nth-child(2) {
+    background: -webkit-linear-gradient(left, #4B90ED, #53BCED);
+}
+
+.nav-common:nth-child(3) {
+    background: -webkit-linear-gradient(left, #34C2A9, #6CD559);
+}
+
+/* .subnav-entry */
+.subnav-entry {
+    display: flex;
+    /* 强制换行 */
+    flex-wrap: wrap;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 5px 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+.subnav-entry li {
+    /* 里面的子盒子可以写 % 相对于父级来说 可以实现导航栏两行*/
+    flex: 20%;
+}
+
+.subnav-entry a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subnav-entry [class^='subnav-entry-icon'] {
+    width: 28px;
+    height: 24px;
+    margin-top: 4px;
+    background-size: 24px;
+}
+
+.subnav-entry-icon1 {
+    background: url(../images/subnav-bg.png) no-repeat 0 0;
+}
+
+.subnav-entry-icon2 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -25px;
+}
+
+.subnav-entry-icon3 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -54px;
+}
+
+.subnav-entry-icon4 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -276px;
+}
+
+.subnav-entry-icon5 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -114px;
+}
+
+.subnav-entry-icon6 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -140px;
+}
+
+.subnav-entry-icon7 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -170px;
+}
+
+.subnav-entry-icon8 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -200px;
+}
+
+.subnav-entry-icon9 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -225px;
+}
+
+.subnav-entry-icon10 {
+    background: url(../images/subnav-bg.png) no-repeat 0 -250px;
+}
+
+.sales-box {
+    border-top: 1px solid #bbb;
+    background-color: #fff;
+    margin: 4px;
+}
+
+.sale-hd {
+    position: relative;
+    height: 44px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sale-hd h2 {
+    position: relative;
+    /* font-size: 0; */
+    /* 不让h2 中的文字显示出来  为了SEO 优化*/
+    text-indent: -999px;
+    overflow: hidden;
+}
+
+.sale-hd h2::after {
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    content: '';
+    width: 79px;
+    height: 16px;
+    background: url(../images/hot.png) no-repeat 0 -20px;
+    background-size: 79px;
+}
+
+.more {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    background: -webkit-linear-gradient(left, #FF506C, #FF6BC6);
+    border-radius: 15px;
+    padding: 3px 20px 3px 10px;
+    color: #fff;
+}
+
+.more::after {
+    content: '';
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(45deg);
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.row a {
+    flex: 1;
+    border-bottom: 1px solid #eee;
+}
+
+.row a:nth-child(1) {
+    border-right: 1px solid #eee;
+}
+
+.row a img {
+    width: 100%;
+}
+
+/* 底部模块 */
+footer {
+    display: flex;
+    height: 50px;
+    border-top: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    margin: 8px 4px;
+    background-color: #fff;
+}
+
+.service {
+    flex: 1;
+}
+
+.service a {
+    display: flex;
+    /* 让a 和父盒子一样大 */
+    height: 100%;
+    /* 把主轴变为y 轴 让两个元素上下排列*/
+    flex-direction: column;
+    /* 侧轴居中对齐(在这里是水平居中) */
+    align-items: center;
+    /* 主轴居中对齐(在这里是垂直居中) */
+    justify-content: center;
+    font-size: 12px;
+}
+
+a [class^='service-icon'] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 104px;
+}
+
+.service-icon1 {
+    background: url(../images/sprite.png) no-repeat -57px -151px;
+}
+
+.service-icon2 {
+    background: url(../images/sprite.png) no-repeat -58px -171px;
+}
+
+.service-icon3 {
+    background: url(../images/sprite.png) no-repeat -59px -308px;
+}
